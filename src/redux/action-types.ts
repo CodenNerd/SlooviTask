@@ -1,0 +1,5 @@
+export const AUTH = "AUTH"
+export const TASK = "TASK"
+export const TASKS = "TASKS"
+export const USER = "USER"
+export const USERS = "USERS"

@@ -1,4 +1,7 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
+import { getUsers } from '../../../redux/actions/actions'
+import { useGlobalFetchData } from '../../../utils/hooks'
+import { getDateInYYYY_MM_DD } from '../../../utils/utils'
 import DatePicker from '../../atoms/date-picker/DatePicker'
 import FieldLayout from '../../atoms/field-layout/FieldLayout'
 import ListSelector from '../../atoms/list-selector/ListSelector'
@@ -8,28 +11,50 @@ import TaskFormActions from '../task-form-actions/TaskFormActions'
 import { ITaskForm } from './ITaskForm'
 import Container from './TaskForm.styles'
 
-const TaskForm: FC<ITaskForm> = ({}) => {
-  return (
+const TaskForm: FC<ITaskForm> = ({ handleCloseTaskForm }) => {
+    const { users } = useGlobalFetchData('users')
+    const { task } = useGlobalFetchData('tasks')
+
+    const [desc, setDesc] = useState( task?.task_msg )
+    const [date, setDate] = useState(getDateInYYYY_MM_DD())
+    const [time, setTime] = useState('');
+    const [selectedUser, setSelectedUser] = useState('')
+
+
+    return (
     <Container>
         <div className="form-inner">
             <form>
                 <FieldLayout className="grid-col-2" label='Task Description' >
-                    <TextField />
+                    <TextField 
+                        text={desc}
+                        setText={setDesc}
+                    />
                 </FieldLayout>
 
                 <FieldLayout label='Date' >
-                    <DatePicker />
+                    <DatePicker 
+                        date={date}
+                        setDate={setDate}
+                    />
                 </FieldLayout>
 
                 <FieldLayout label='Time' >
-                    <TimeSelector />
+                    <TimeSelector 
+                        time={time}
+                        setTime={setTime}
+                    />
                 </FieldLayout>
 
                 <FieldLayout className="grid-col-2" label='Assign User' >
-                    <ListSelector />
+                    <ListSelector 
+                        list={users}
+                        selected={selectedUser}
+                        setSelected={setSelectedUser}
+                     />
                 </FieldLayout>
 
-                <TaskFormActions className="grid-col-2" />
+                <TaskFormActions handleCloseTaskForm={handleCloseTaskForm} className="grid-col-2" />
 
             </form>
         </div>

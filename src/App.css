@@ -9,3 +9,7 @@
 body {
   background-color: whitesmoke;
 }
+
+.d-none {
+  display: none;
+}

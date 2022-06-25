@@ -24,6 +24,12 @@ export default styled.div`
             }
         }
     }
+    input.proxy-input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+    }
     span {
         position: absolute;
         right: 10px;
@@ -37,6 +43,7 @@ export default styled.div`
             color: grey;
         }
     }
+
 
 
 `

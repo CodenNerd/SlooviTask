@@ -1,12 +1,14 @@
-import React from 'react'
-import { FaCalendar, FaCalendarAlt, FaRegCalendarAlt } from 'react-icons/fa'
-import { TiCalendar, TiCalendarOutline } from 'react-icons/ti'
+import React, { FC, useState } from 'react'
+import { FaRegCalendarAlt } from 'react-icons/fa'
+import { getDateInYYYY_MM_DD } from '../../../utils/utils'
 import Container from './DatePicker.styles'
+import { IDatePicker } from './IDatePicker'
 
-const DatePicker = () => {
+const DatePicker: FC<IDatePicker> = ({ date, setDate }) => {
+
   return (
     <Container>
-        <input type="date" name="" id="" />
+        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} name="" id="" />
         <span className="icon">
             <FaRegCalendarAlt />
         </span>
