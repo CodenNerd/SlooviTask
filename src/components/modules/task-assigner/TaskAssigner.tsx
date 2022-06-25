@@ -34,7 +34,7 @@ const TaskAssigner: FC<ITaskAssigner> = () => {
     } else {
       setShowTaskForm(false)
     }
-  }, [task?.id])
+  }, [task?.id, task])
 
   const getUserImageUrl = (userId: string) => {
     return users.find((user: any) => user.user_id === userId)?.icon
@@ -43,7 +43,13 @@ const TaskAssigner: FC<ITaskAssigner> = () => {
   return (
     <Container>
       <TaskHeader newTaskHandler={handleNewTask}/>
-      {showTaskForm && <TaskForm  handleCloseTaskForm={() => setShowTaskForm(false)} />}
+      {showTaskForm && 
+      <TaskForm  handleCloseTaskForm={() => {
+        dispatch({ type: TASK, payload: {} })
+        setShowTaskForm(false)
+        }} 
+      />
+      }
 
       {
         !showTaskForm && tasks.map((task: any) => (
@@ -51,7 +57,7 @@ const TaskAssigner: FC<ITaskAssigner> = () => {
             key={task.id}
             date={task.task_date} 
             id={task.id} 
-            imageUrl={getUserImageUrl(task.user_id)}
+            imageUrl={getUserImageUrl(task.assigned_user)}
             handleEdit={() => handleEditTask(task)}
             title={task.task_msg}
           />

@@ -5,7 +5,12 @@ export default styled.div`
     .form-action-inner {
         display: flex;
         justify-content: space-between;
-
+        .delete-btn {
+            padding: 0px 10px;
+            svg {
+                color: #444;
+            }
+        }
         .buttons {
             display: flex;
             gap: 10px;

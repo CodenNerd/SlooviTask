@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react'
-import { getUsers } from '../../../redux/actions/actions'
+import { createNewTask, updateTask } from '../../../redux/actions/actions'
 import { useGlobalFetchData } from '../../../utils/hooks'
-import { getDateInYYYY_MM_DD } from '../../../utils/utils'
+import { convertSecondsToTime, convertTimeToSeconds, getCurrentTimeZoneInSeconds, getDateInYYYY_MM_DD } from '../../../utils/utils'
 import DatePicker from '../../atoms/date-picker/DatePicker'
 import FieldLayout from '../../atoms/field-layout/FieldLayout'
 import ListSelector from '../../atoms/list-selector/ListSelector'
@@ -15,16 +15,36 @@ const TaskForm: FC<ITaskForm> = ({ handleCloseTaskForm }) => {
     const { users } = useGlobalFetchData('users')
     const { task } = useGlobalFetchData('tasks')
 
-    const [desc, setDesc] = useState( task?.task_msg )
-    const [date, setDate] = useState(getDateInYYYY_MM_DD())
-    const [time, setTime] = useState('');
-    const [selectedUser, setSelectedUser] = useState('')
+    const [desc, setDesc] = useState( task?.task_msg || '' )
+    const [date, setDate] = useState( task?.task_date || getDateInYYYY_MM_DD() )
+    const [time, setTime] = useState( convertSecondsToTime(task?.task_time) || '' );
+    const [selectedUser, setSelectedUser] = useState( task?.assigned_user || '' )
 
+    const handleFormSubmit = (e: any) => {
+        e.preventDefault()
+        console.log(task)
+        task?.id ? updateTask({
+            assigned_user: selectedUser,
+            task_date: date,
+            task_time: convertTimeToSeconds(time),
+            is_completed: 0,
+            time_zone: getCurrentTimeZoneInSeconds(),
+            task_msg: desc
+        }, task?.id, handleCloseTaskForm) : createNewTask({
+            assigned_user: selectedUser,
+            task_date: date,
+            task_time: convertTimeToSeconds(time),
+            is_completed: 0,
+            time_zone: getCurrentTimeZoneInSeconds(),
+            task_msg: desc
+        }, handleCloseTaskForm);
+    }
 
+    console.log(task)
     return (
     <Container>
         <div className="form-inner">
-            <form>
+            <form onSubmit={handleFormSubmit}>
                 <FieldLayout className="grid-col-2" label='Task Description' >
                     <TextField 
                         text={desc}

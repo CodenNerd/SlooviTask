@@ -2,7 +2,7 @@ import axios from "axios"
 import config from "../../env"
 import { endpoints } from "../../utils/endpoints"
 import http from "../../utils/http"
-import { AUTH, TASKS, USER, USERS } from "../action-types"
+import { AUTH, LOADING, TASKS, USERS } from "../action-types"
 import store from "../store"
 
 export const getAuthCredentials = async () => {
@@ -15,7 +15,7 @@ export const getAuthCredentials = async () => {
                         'Content-Type': 'application/json',
                     }}
                 )
-    if (res?.data?.code === 200) {
+    if (res?.data?.status === "success") {
         store.dispatch({
             type: AUTH,
             payload: {
@@ -26,33 +26,104 @@ export const getAuthCredentials = async () => {
             }
         })
     }
-    console.log(res);
 }
 
 export const getTasks = () => {
+    store.dispatch({ type: LOADING, payload: true })
     const {companyId} = store.getState().auth
     http.get(`${endpoints.TASKS}?company_id=${companyId}`)
     .then(res => {
-        console.log(res)
-        if ( res?.data?.code === 200 ) {
+        if ( res?.data?.status === "success" ) {
             store.dispatch({
                 type: TASKS,
                 payload: res?.data?.results
             })
         }
     })
+    .catch(() => {})
+    .then(() => {
+        store.dispatch({ type: LOADING, payload: false })
+    })
 }
 
 export const getUsers = () => {
+    store.dispatch({ type: LOADING, payload: true })
     const {companyId} = store.getState().auth
     http.get(`${endpoints.TEAM}?product=outreach&company_id=${companyId}`)
     .then(res => {
-        console.log(res)
-        if ( res?.data?.code === 200 ) {
+        if ( res?.data?.status === "success" ) {
             store.dispatch({
                 type: USERS,
                 payload: res?.data?.results?.data
             })
         }
     })
+    .catch(() => {})
+    .then(() => {
+        store.dispatch({
+            type: LOADING,
+            payload: false
+        })
+    })
 }
+
+export const createNewTask = ( payload: any, successCallback?:Function) => {
+    store.dispatch({ type: LOADING, payload: true })
+    const {companyId} = store.getState().auth
+    http.post(`${endpoints.TASKS}?company_id=${companyId}`, payload)
+    .then(res => {
+        if ( res?.data?.status === "success" ) {
+            successCallback?.()
+            getTasks()
+        }
+    })
+    .catch(() => {})
+    .then(() => {
+        store.dispatch({
+            type: LOADING,
+            payload: false
+        })
+    })
+}
+
+export const updateTask = (payload: any, taskId: string, successCallback?:Function) => {
+    store.dispatch({ type: LOADING, payload: true })
+    const {companyId} = store.getState().auth
+    http.put(`${endpoints.TASKS}/${taskId}?company_id=${companyId}`, payload)
+    .then(res => {
+        if ( res?.data?.status === "success" ) {
+            successCallback?.()
+            getTasks()
+        }
+    })
+    .catch(() => {})
+    .then(() => {
+        store.dispatch({
+            type: LOADING,
+            payload: false
+        })
+    })
+}
+
+export const deleteTask = (taskId: string, successCallback?:Function) => {
+    // eslint-disable-next-line no-restricted-globals
+    const proceed = confirm('Are you sure you want to delete this task?')
+    if (!proceed) return
+    store.dispatch({ type: LOADING, payload: true })
+    const {companyId} = store.getState().auth
+    http.delete(`${endpoints.TASKS}/${taskId}?company_id=${companyId}`)
+    .then(res => {
+        if ( res?.data?.status === "success" ) {
+            successCallback?.()
+            getTasks()
+        }
+    })
+    .catch(() => {})
+    .then(() => {
+        store.dispatch({
+            type: LOADING,
+            payload: false
+        })
+    })
+}
+

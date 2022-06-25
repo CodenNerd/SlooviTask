@@ -8,7 +8,7 @@ const ListSelector = ({ list, selected, setSelected }: IListSelector) => {
     return (
     <Container>
         <input type="text" name="" value={''} onChange={(e: any) => setSelected(e.target.value)} id="" list='listSelector'/>
-        <input className='proxy-input' type="text" value={list.find(l=> l.id === selected)?.name} onChange={() => {}} />
+        <input className='proxy-input' type="text" value={list.find(l=> l.id === selected)?.name} />
 
         <span className="icon">
             <TiArrowUnsorted />

@@ -3,5 +3,8 @@ export interface IButton {
     type?: 'submit' | 'button' | 'reset',
     onClick?: React.MouseEventHandler<HTMLButtonElement>,
     className?: string,
-    theme?: 'success-solid' | 'neutral-boundriless'
+    theme?: 'success-solid' | 'neutral-boundriless',
+    onMouseEnter?: any,
+    onMouseLeave?: any
+    dataTip?: any
 }
