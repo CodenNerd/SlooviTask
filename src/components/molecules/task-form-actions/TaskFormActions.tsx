@@ -8,7 +8,7 @@ const TaskFormActions = ({className}: ITaskFormActions) => {
   return (
     <Container className={className}>
         <div className="form-action-inner">
-            <Button label={<FaTrashAlt />} theme='neutral-boundriless' />
+            <Button label={<FaTrashAlt />} className='' theme='neutral-boundriless' />
             <div className='buttons'>
                 <Button label='Cancel' theme='neutral-boundriless' />
                 <Button label='Save' theme='success-solid' />                
