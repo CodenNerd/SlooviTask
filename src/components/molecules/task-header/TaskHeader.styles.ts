@@ -6,7 +6,6 @@ export default styled.div`
         display: grid;
         grid-template-columns: auto auto;
         background: whitesmoke;
-        border-bottom: ${border};
         .title {
             text-transform: uppercase;
             font-weight: 600;

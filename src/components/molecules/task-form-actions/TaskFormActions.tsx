@@ -1,8 +1,20 @@
 import React from 'react'
+import Container from './TaskFormActions.styles'
+import { ITaskFormActions } from './ITaskFormActions'
+import Button from '../../atoms/button/Button'
+import { FaTrashAlt } from 'react-icons/fa'
 
-const TaskFormActions = () => {
+const TaskFormActions = ({className}: ITaskFormActions) => {
   return (
-    <div>TaskFormActions</div>
+    <Container className={className}>
+        <div className="form-action-inner">
+            <Button label={<FaTrashAlt />} theme='neutral-boundriless' />
+            <div className='buttons'>
+                <Button label='Cancel' theme='neutral-boundriless' />
+                <Button label='Save' theme='success-solid' />                
+            </div>
+        </div>
+    </Container>
   )
 }
 

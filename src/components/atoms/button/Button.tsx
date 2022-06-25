@@ -3,9 +3,9 @@ import ButtonContainer from './Button.styles'
 import { IButton } from './IButton'
 
 
-const Button = ({label, type = 'button', onClick: clickHandler, className }: IButton) => {
+const Button = ({label, type = 'button', onClick: clickHandler, className, theme }: IButton) => {
   return (
-    <ButtonContainer className={className} type={type} onClick={clickHandler}>
+    <ButtonContainer className={`${className} ${theme}`} type={type} onClick={clickHandler}>
         {label}
     </ButtonContainer>
   )

@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import Task from './components/modules/task/Task';
+import TaskAssigner from './components/modules/task-assigner/TaskAssigner';
 
 function App() {
   return (
-    <Task />
+    <TaskAssigner />
   );
 }
 
