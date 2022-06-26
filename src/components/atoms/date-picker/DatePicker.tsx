@@ -1,6 +1,5 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { FaRegCalendarAlt } from 'react-icons/fa'
-import { getDateInYYYY_MM_DD } from '../../../utils/utils'
 import Container from './DatePicker.styles'
 import { IDatePicker } from './IDatePicker'
 

@@ -1,6 +1,5 @@
 import axios from "axios";
 import config from "../env";
-import { getAuthCredentials } from "../redux/actions/actions";
 import store from "../redux/store";
 
 
@@ -30,7 +29,6 @@ http.interceptors.request.use((config: any) => {
 })
 
 http.interceptors.response.use((response: any) => {
-    console.log(response)
     return response;
 });
 

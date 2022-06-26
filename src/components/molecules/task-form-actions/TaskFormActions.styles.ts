@@ -11,7 +11,7 @@ export default styled.div`
                 color: #444;
             }
         }
-        .buttons {
+        .right {
             display: flex;
             gap: 10px;
         }

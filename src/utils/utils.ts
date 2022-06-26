@@ -42,6 +42,5 @@ export const convertSecondsToTime = (seconds: number) => {
 
 export const getCurrentTimeZoneInSeconds = () => {
     const date = new Date();
-    console.log(date.getTimezoneOffset() * 60)
     return (-1 * date.getTimezoneOffset() * 60)
 }

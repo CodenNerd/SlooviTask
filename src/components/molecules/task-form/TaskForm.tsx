@@ -22,7 +22,6 @@ const TaskForm: FC<ITaskForm> = ({ handleCloseTaskForm }) => {
 
     const handleFormSubmit = (e: any) => {
         e.preventDefault()
-        console.log(task)
         task?.id ? updateTask({
             assigned_user: selectedUser,
             task_date: date,
@@ -40,11 +39,12 @@ const TaskForm: FC<ITaskForm> = ({ handleCloseTaskForm }) => {
         }, handleCloseTaskForm);
     }
 
-    console.log(task)
+
     return (
     <Container>
         <div className="form-inner">
             <form onSubmit={handleFormSubmit}>
+
                 <FieldLayout className="grid-col-2" label='Task Description' >
                     <TextField 
                         text={desc}
